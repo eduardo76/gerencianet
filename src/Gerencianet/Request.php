@@ -23,14 +23,21 @@ class Request
         $composerData = json_decode(file_get_contents(__DIR__.'/../../composer.json'), true);
         $partner_token = isset($options['partner_token'])? $options['partner_token'] : "";
         $this->certified_path = isset($options['certified_path'])? $options['certified_path'] : null;
+
+        $verify = false;
+        if($this->certified_path){
+            $verify = $this->certified_path;
+        }
+
         $this->client = new Client([
         'debug' => $this->config['debug'],
-        'base_url' => $this->config['baseUri'],
+        'base_uri' => $this->config['baseUri'],
         'headers' => [
           'Content-Type' => 'application/json',
           'api-sdk' => 'php-' . $composerData['version'],
           'partner-token' => $partner_token
           ],
+        'verify' => $verify,
       ]);
     }
 
@@ -38,13 +45,13 @@ class Request
     {
 
         try {
-            if($this->certified_path){
-                $this->client->setDefaultOption("verify", $this->certified_path);
-            }
-            $this->request = $this->client->createRequest($method, $route, $requestOptions);
-            $response = $this->client->send($this->request);
 
-            return json_decode($response->getBody(), true);
+            $this->request = new \GuzzleHttp\Psr7\Request($method, $route, $requestOptions);
+            $promise = $this->client->sendAsync($this->request)->then(function ($response) {
+                return json_decode($response->getBody(), true);
+            });
+            $promise->wait();
+
         } catch (ClientException $e) {
             throw new AuthorizationException($e->getResponse()->getStatusCode(),
                        $e->getResponse()->getReasonPhrase(),
