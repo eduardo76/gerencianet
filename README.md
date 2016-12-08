@@ -1,5 +1,6 @@
 # SDK GERENCIANET FOR PHP - NÃO OFICIAL
 
+== NÃO OFICIAL ==  
 Sdk for Gerencianet Pagamentos' API.
 For more informations about parameters and values, please refer to [Gerencianet](http://gerencianet.com.br) documentation.
 
