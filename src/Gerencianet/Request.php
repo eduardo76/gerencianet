@@ -46,11 +46,8 @@ class Request
 
         try {
 
-            $this->request = new \GuzzleHttp\Psr7\Request($method, $route, $requestOptions);
-            $promise = $this->client->sendAsync($this->request)->then(function ($response) {
-                return json_decode($response->getBody(), true);
-            });
-            $promise->wait();
+            $response = $this->client->request($method, $route, $requestOptions);
+            return json_decode($response->getBody(), true);
 
         } catch (ClientException $e) {
             throw new AuthorizationException($e->getResponse()->getStatusCode(),
