@@ -1,4 +1,4 @@
-# SDK GERENCIANET FOR PHP
+# SDK GERENCIANET FOR PHP - NÃO OFICIAL
 
 Sdk for Gerencianet Pagamentos' API.
 For more informations about parameters and values, please refer to [Gerencianet](http://gerencianet.com.br) documentation.
@@ -10,13 +10,13 @@ For more informations about parameters and values, please refer to [Gerencianet]
 ## Installation
 Require this package with [composer](https://getcomposer.org/):
 ```
-$ composer require gerencianet/gerencianet-sdk-php
+$ composer require eduardo/gerencianet-sdk-php-atualizado
 ```
 Or include it in your composer.json file:
 ```
 ...
 "require": {
-  "gerencianet/gerencianet-sdk-php": "1.*"
+  "eduardo/gerencianet-sdk-php-atualizado": "1.*"
 },
 ...
 ```
